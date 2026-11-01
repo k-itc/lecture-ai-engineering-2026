@@ -1,0 +1,201 @@
+{
+  "summary": {
+    "label": "after",
+    "n": 21,
+    "format_rate": 1.0,
+    "content_rate": 0.9047619047619048,
+    "both_rate": 0.9047619047619048,
+    "seconds": 47.8
+  },
+  "rows": [
+    {
+      "question": "カピバラの特徴を教えてください",
+      "raw": "{\"answer\": \"カピバラは世界最大のげっ歯類で、前足と後足に水かきがあり泳ぎが得意です。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "カピバラの足の特徴と特技を教えてください",
+      "raw": "{\"answer\": \"カピバラは世界最大のげっ歯類で、前足と後足に水かきがあり泳ぎが得意です。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "一番大きなげっ歯類について教えてください",
+      "raw": "{\"answer\": \"カピバラは世界最大のげっ歯類で、前足と後足に水かきがあり泳ぎが得意です。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "ハムスターの特徴を教えてください",
+      "raw": "{\"answer\": \"ハムスターには頬袋があり、食べたエサや巣材を一時的に貯めて持ち運ぶことができます。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "ハムスターがエサを頬に詰めるのはなぜですか",
+      "raw": "{\"answer\": \"ハムスターには頬袋があり、食べたエサや巣材を一時的に貯めて持ち運ぶことができます。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "頬袋の役割について教えてください",
+      "raw": "{\"answer\": \"ハムスターには頬袋があり、食べたエサや巣材を一時的に貯めて持ち運ぶことができます。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "シマリスの習性について教えてください",
+      "raw": "{\"answer\": \"シマリスは秋になるとどんぐりなどを地面に埋めて蓄える「貯食（チョショク）」という行動を行います。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "シマリスがどんぐりを地面に埋める理由は何ですか",
+      "raw": "{\"answer\": \"シマリスは秋になるとどんぐりなどを地面に埋めて蓄える「貯食（チョショク）」という行動を行います。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "シマリスの秋の行動について教えてください",
+      "raw": "{\"answer\": \"シマリスは秋になるとどんぐりなどを地面に埋めて蓄える「貯食（チョショク）」という行動を行います。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "ビーバーの生態を教えてください",
+      "raw": "{\"answer\": \"ビーバーは伸び続ける頑丈な門歯（前歯）を使って木をかじり倒し、川にダムや巣を作ります。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "ビーバーが木をかじり倒せる理由は何ですか",
+      "raw": "{\"answer\": \"ビーバーは伸び続ける頑丈な門歯（前歯）を使って木をかじり倒し、川にダムや巣を作ります。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "川にダムを建設するげっ歯類は何ですか",
+      "raw": "{\"answer\": \"ビーバーは伸び続ける頑丈な門歯（前歯）を使って木をかじり倒し、川にダムや巣を作ります。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "ヤマアラシの針の役割は？",
+      "raw": "{\"answer\": \"ヤマアラシの針状の毛は、敵に襲われた際に身を守るための防衛器官です。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "ヤマアラシの背中の毛にはどんな特徴がありますか",
+      "raw": "{\"answer\": \"ヤマアラシの背中にある固い針状の毛は、敵に襲われた際に身を守るための防衛器官です。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "ヤマアラシが敵から身を守る方法は何ですか",
+      "raw": "{\"answer\": \"ヤマアラシの背中にある固い針状の毛は、敵に襲われた際に身を守るための防衛器官です。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": false
+    },
+    {
+      "question": "モルモットとハムスターの違いは何ですか",
+      "raw": "{\"answer\": \"この FAQ には記載がありません。運営に確認が必要です。\", \"needs_review\": true}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": true
+    },
+    {
+      "question": "ネズミの前歯は一日にどれくらい伸びますか",
+      "raw": "{\"answer\": \"この FAQ には記載がありません。運営に確認が必要です。\", \"needs_review\": true}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": true
+    },
+    {
+      "question": "カピバラは日本にも野生で生息していますか",
+      "raw": "{\"answer\": \"この FAQ には記載がありません。運営に確認が必要です。\", \"needs_review\": true}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": true
+    },
+    {
+      "question": "ハムスターの冬眠について教えてください",
+      "raw": "{\"answer\": \"この FAQ には記載がありません。運営に確認が必要です。\", \"needs_review\": true}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": true,
+      "both_ok": true,
+      "gold_needs_review": true
+    },
+    {
+      "question": "ヤマアラシの針は人間に刺さると危険ですか",
+      "raw": "{\"answer\": \"ヤマアラシの背中にある固い針状の毛は、敵に襲われた際に身を守るための防衛器官です。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": true
+    },
+    {
+      "question": "ビーバーのダムは環境にどのような影響を与えますか",
+      "raw": "{\"answer\": \"ビーバーは伸び続ける頑丈な門歯（前歯）を使って木をかじり倒し、川にダムや巣を作ります。\", \"needs_review\": false}",
+      "format_ok": true,
+      "format_reason": "",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": true
+    }
+  ]
+}
