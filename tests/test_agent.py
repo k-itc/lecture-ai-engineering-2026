@@ -6,9 +6,14 @@ TestModel は実際のLLMを呼ばない偽モデルで、登録されたツー�
 """
 
 from pydantic_ai import DeferredToolRequests
-from pydantic_ai.messages import ToolCallPart, ToolReturnPart
+import sys
+
+import pytest
+from pydantic_ai.messages import ModelResponse, TextPart, ToolCallPart, ToolReturnPart
+from pydantic_ai.models.function import FunctionModel
 from pydantic_ai.models.test import TestModel
 
+from app import agent as agent_module
 from app.agent import agent
 
 BASE_TOOLS = {"search_glossary", "get_lecture_summary"}
@@ -40,3 +45,50 @@ def test_glossary_result_reaches_the_model():
         result = agent.run_sync("RAGとは？")
     returns = _parts(result, ToolReturnPart)
     assert returns and returns[0].tool_name == "search_glossary"
+
+
+@pytest.mark.parametrize(
+    ("answers", "saved_contents"),
+    [
+        (["y", "n"], ["承認された記録"]),
+        (["n", "y"], ["承認された記録2"]),
+        (["invalid", "n", "n"], []),
+    ],
+)
+def test_cli_resumes_mixed_tool_calls_with_individual_approvals(
+    monkeypatch, tmp_path, capsys, answers, saved_contents
+):
+    observed_returns = []
+
+    def respond(messages, info):
+        if not any(isinstance(message, ModelResponse) for message in messages):
+            return ModelResponse(parts=[
+                ToolCallPart("search_glossary", {"query": "LoRA"}, tool_call_id="search"),
+                ToolCallPart("get_lecture_summary", {"lecture": 3}, tool_call_id="summary"),
+                ToolCallPart("save_learning_log", '{"content": "承認された記録"}', tool_call_id="save1"),
+                ToolCallPart("save_learning_log", {"content": "承認された記録2"}, tool_call_id="save2"),
+            ])
+        observed_returns.extend(
+            part for message in messages for part in message.parts
+            if isinstance(part, ToolReturnPart)
+        )
+        return ModelResponse(parts=[TextPart("完了")])
+
+    inputs = iter(answers)
+
+    def answer(prompt):
+        assert not list((tmp_path / "learning_log").glob("*.txt"))
+        return next(inputs)
+
+    monkeypatch.setattr("builtins.input", answer)
+    monkeypatch.setattr(sys, "argv", ["agent", "テスト"])
+    monkeypatch.setattr(agent_module, "build_model", lambda: FunctionModel(respond))
+    monkeypatch.chdir(tmp_path)
+
+    agent_module.main()
+
+    assert "完了" in capsys.readouterr().out
+    assert [path.read_text(encoding="utf-8") for path in (tmp_path / "learning_log").glob("*.txt")] == saved_contents
+    assert [part.tool_call_id for part in observed_returns].count("search") == 1
+    assert [part.tool_call_id for part in observed_returns].count("summary") == 1
+    assert {part.tool_call_id for part in observed_returns} >= {"search", "summary", "save1", "save2"}
