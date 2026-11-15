@@ -4,7 +4,10 @@
 「採点 → 人のラベルとの比較 → 要確認・不一致の集計」が通ることを確かめる。
 """
 
+from types import SimpleNamespace
+
 from app import judge
+from app import agent as agent_module
 from app.judge import (
     ALL_CRITERIA,
     DEFAULT_CASES,
@@ -46,6 +49,40 @@ def test_cases_and_rubric_are_consistent():
         assert f"{name}（{key}）" in rubric
     labels = load_labels(INSTRUCTOR_LABELS)
     assert set(labels) == {c["id"] for c in cases}
+
+
+def test_generate_passes_wait_to_answer_generation(monkeypatch, tmp_path):
+    cases = [{"id": "1", "question": "test"}]
+    waits = []
+    monkeypatch.setattr(judge, "read_jsonl", lambda _path: cases)
+    monkeypatch.setattr(judge, "generate_answers", lambda items, wait: waits.append(wait) or items)
+    monkeypatch.setattr(judge, "write_jsonl", lambda _path, _items: None)
+
+    judge.main(["--generate", "--cases", str(tmp_path / "cases.jsonl"), "--wait", "5"])
+
+    assert waits == [5.0]
+
+
+def test_generate_retries_transient_503(monkeypatch):
+    case = {"id": "1", "question": "test"}
+    attempts = []
+    delays = []
+
+    def run_sync(_question, model):
+        attempts.append(model)
+        if len(attempts) == 1:
+            raise judge.ModelHTTPError(status_code=503, model_name="test")
+        return SimpleNamespace(output="answer")
+
+    monkeypatch.setattr(agent_module, "build_model", lambda: "model")
+    monkeypatch.setattr(agent_module.agent, "run_sync", run_sync)
+    monkeypatch.setattr(judge.time, "sleep", delays.append)
+
+    answers = judge.generate_answers([case], wait=0)
+
+    assert answers[0]["answer"] == "answer"
+    assert len(attempts) == 2
+    assert delays[0] == 10
 
 
 def test_judge_pipeline_with_fake_model():
