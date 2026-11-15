@@ -308,7 +308,16 @@ def generate_answers(cases: list[dict], wait: float = 1.0) -> list[dict]:
     model = build_model()
     print(f"回答を生成中 {len(cases)} 件 ", end="", flush=True)
     for case in cases:
-        result = agent.run_sync(case["question"], model=model)
+        for attempt in range(4):
+            try:
+                result = agent.run_sync(case["question"], model=model)
+                break
+            except ModelHTTPError as e:
+                if e.status_code != 503 or attempt == 3:
+                    raise
+                retry_wait = 10 * 2**attempt
+                print(f"\nモデルが混み合っています。{retry_wait}秒後に再試行します。", flush=True)
+                time.sleep(retry_wait)
         case["answer"] = str(result.output)
         print(".", end="", flush=True)
         time.sleep(wait)
@@ -343,7 +352,7 @@ def main(argv: list[str] | None = None) -> None:
 
     if args.generate:
         try:
-            cases = generate_answers(cases)
+            cases = generate_answers(cases, wait=args.wait)
         except ModelHTTPError as e:
             print(api_error_message(e.status_code, str(e.body)[:200]))
             raise SystemExit(1)
