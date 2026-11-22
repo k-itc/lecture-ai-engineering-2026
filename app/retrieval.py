@@ -125,7 +125,7 @@ def open_index(path: Path):
 
 
 def search(query: str) -> list[dict]:
-    """質問を埋め込み、近いページを最大RAG_TOP_K件返す。"""
+    """質問を埋め込み、近いページとその前後1ページを返す。"""
     if not isinstance(query, str) or not query.strip():
         raise ValueError("検索語が空です。")
     with open_index(RAG_DB) as db:
@@ -135,7 +135,32 @@ def search(query: str) -> list[dict]:
                    vec_distance_cosine(embedding, ?) AS distance
             FROM chunks ORDER BY distance, page_id LIMIT ?
         """, (sqlite_vec.serialize_float32(vector), RAG_TOP_K))
-        return [dict(row) for row in rows]
+        hits = [dict(row) for row in rows]
+
+    # 全ページの情報をロードして前後ページを取得できるようにマッピングを作成
+    all_pages = load_pages(RAG_SOURCE)
+    page_map = {(p["document_id"], p["page"]): p for p in all_pages}
+
+    results = []
+    seen_page_ids = set()
+
+    for hit in hits:
+        doc_id = hit["document_id"]
+        current_page = hit["page"]
+
+        # 前後1ページを含めた対象ページ番号のリスト [前, 当該, 後]
+        for p_num in [current_page - 1, current_page, current_page + 1]:
+            page_obj = page_map.get((doc_id, p_num))
+            if page_obj:
+                p_id = page_obj["page_id"]
+                if p_id not in seen_page_ids:
+                    seen_page_ids.add(p_id)
+                    # 当該ヒットページの場合は距離情報を残し、前後ページの場合は distance=None と表記
+                    res_item = dict(page_obj)
+                    res_item["distance"] = hit["distance"] if p_num == current_page else None
+                    results.append(res_item)
+
+    return results
 
 
 def search_graph(query: str) -> dict:
